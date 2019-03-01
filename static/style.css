@@ -1,0 +1,143 @@
+
+/*----------------------GENERAL---------------------*/
+
+* {
+    box-sizing: border-box;
+}
+
+html, body { 
+    background-color:#303952 ;
+    margin: 0; 
+    padding: 0; 
+    height: 100%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+/*----------------------HEADER---------------------*/
+
+header {
+    margin-bottom: 15px;
+    background: #f7d794;
+}
+
+/*----------------------TERMINAL---------------------*/
+
+.board_area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.code-editor {
+    width: 45%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*----- Boton Submit --------*/
+
+input {
+    background: none;
+    padding: 10px 30px;
+    transition: background 0.3s, color 0.3s;
+    border: 1px solid #BBB;
+}
+
+#submit {
+    color: #ffdd59;
+}
+
+#submit:hover {
+    border: 1px solid #BBB;
+    background: #ffdd59;
+    padding: 10px 30px;
+    color: #1e272e;
+}
+
+#siguiente {
+    background-color: #ffdd59;
+}
+
+/*----------*/
+
+.terminal textarea{
+    border: 1px solid #BBB;
+    width: 100%;
+    resize: none;
+}
+
+form {
+    height: 100%;
+}
+
+#editor {
+    height: 80vh;
+}
+
+#result {
+    color: white;
+    background-color: #1e272e;
+    font-weight: 550;
+}
+
+.enunciados {
+    border: 1px solid #BBB;
+    width: 45%;
+    height: 80vh;
+    background-color: #d1d8e0;
+}
+
+.enunciado {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 400;
+}
+
+.enunciado h2 {
+    font-size: 30px;
+    color: #1e272e;
+}
+
+.enunciado h3 {
+    font-size: 20px;
+    color: #485460;
+}
+
+.enunciado p {
+    font-weight: 500;
+    
+}
+
+/*----------------------INDEX---------------------*/
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.tags a {
+    background: #ffc048;
+    width: 30%;
+    height: 30%;
+    text-align: center;
+    margin: 10px;
+    text-decoration: none;
+    transition: background 2s;
+}
+
+.eleccion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tags a:hover {
+    background: #d2dae2;
+}
+
