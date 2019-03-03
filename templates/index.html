@@ -1,14 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<div class="index">
+    <h1 class="index">Ejercicios.</h1>
 
-<div class="tags">
-    <a href="/form/listas/1" ><div class="eleccion">Listas</div></a>
-    <a href="/form/colas/1" ><div class="eleccion">Colas</div></a>
-    <a href="/form/pilas/1" ><div class="eleccion">Pilas</div></a>
-    <a href="/form/recursion/1" ><div class="eleccion">Recursion</div></a>
-    <a href="/form/diccionarios/1" ><div class="eleccion">Diccionarios</div></a>
-    <a href="/form/listas_enlazadas/1" ><div class="eleccion">Listas Enlazadas</div></a>
+    <div class="buttons-index">
+        <button  onclick="window.location.href='form/listas/1'">Listas</button>
+        <button onclick="window.location.href='form/colas/1'">Colas</button>
+        <button onclick="window.location.href='form/pilas/1'">Pilas</button>
+        <button onclick="window.location.href='form/recusion/1'">Recursion</button>
+        <button onclick="window.location.href='form/diccionarios/1'">Diccionarios</button>
+        <button onclick="window.location.href='form/listas_enlazadas/1'">Listas Enlazadas</button>
+    </div>
 </div>
 
 {% endblock %}

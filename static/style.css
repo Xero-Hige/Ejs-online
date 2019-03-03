@@ -1,21 +1,21 @@
-
 /*----------------------GENERAL---------------------*/
 
 * {
     box-sizing: border-box;
 }
 
-html, body { 
-    background-color:#303952 ;
-    margin: 0; 
-    padding: 0; 
+html,
+body {
+    background-color: #303952;
+    margin: 0;
+    padding: 0;
     height: 100%;
-    margin-right: 5%;
 }
 
 body {
     display: flex;
     width: 100%;
+    font: 300 1em 'Fira Sans', sans-serif;
 }
 
 
@@ -87,7 +87,7 @@ input {
 
 /*----------*/
 
-.terminal textarea{
+.terminal textarea {
     border: 1px solid #BBB;
     width: 100%;
     resize: none;
@@ -123,6 +123,7 @@ form {
 .enunciado h2 {
     font-size: 30px;
     color: #1e272e;
+    margin-top: 40px;
 }
 
 .enunciado h3 {
@@ -132,36 +133,70 @@ form {
 
 .enunciado p {
     font-weight: 500;
-    
+
 }
 
 /*----------------------INDEX---------------------*/
 
-.tags {
+.index {
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.buttons-index {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 10vh;
+    display: flex;
     flex-wrap: wrap;
+}
+
+.buttons-index button {
+    background: none;
+    border: 2px solid;
+    font: inherit;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
+    color: #ff7f82;
+    transition: 0.45s;
+}
+
+
+.buttons-index button:hover, .buttons-index button:focus {
+    box-shadow: inset -8em 0 0 0 #ffdc7f, inset 8em 0 0 0 #ffdc7f;
+    border-color: #ffdc7f;
+    color: #fff;
+}
+
+.index h1 {
+    font-weight: 400;
+    text-align: center;
+    margin-top: 40vh;
+    color: #fff;
+}
+
+/*----------------------404---------------------*/
+
+.not-found {
+    color: #fff;
     width: 100%;
     justify-content: center;
-}
-
-.tags a {
-    background: #ffc048;
-    width: 30%;
-    height: 30%;
-    text-align: center;
-    margin: 10px;
-    text-decoration: none;
-    transition: background 2s;
-}
-
-.eleccion {
-    display: flex;
+    align-content: center;
     align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin: 5% 5% auto 5%;
 }
 
-.tags a:hover {
-    background: #d2dae2;
+
+.not-found h2{
+    font-size: 5vh;
 }
 
+span.zen { 
+    color: #e4cb58;
+    font: inherit;
+  }
