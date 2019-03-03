@@ -6,6 +6,7 @@ from wtforms.validators import Required
 import subprocess
 import os
 import uuid
+import re
 
 
 app = Flask(__name__)
@@ -19,12 +20,19 @@ def index():
 def form(tema, num_ej):
     form = CodeForm(request.form)
     result = None
+    if not form.editor.data:
+        form.editor.data = formato_funcion(tema, num_ej)
 
-    cant_ejs_tema = len(os.listdir("templates/ejercicios/{}".format(tema)))
+    lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))
 
     if request.method == 'POST' and form.validate():
         result = str(runCode(form.editor.data, tema, num_ej))
-    return render_template('home.html', form = form, tema = tema, num_ej = num_ej, result = result, ejs_tema = cant_ejs_tema)
+        if result == '':
+            result = "Pasaste todas las pruebas!" 
+    return render_template('home.html', 
+                            form = form, tema = tema, num_ej = num_ej, result = result, 
+                            ejs_tema = len(lista_ejs)
+                            )
 
 
 
@@ -32,7 +40,6 @@ def form(tema, num_ej):
 def result():
    if request.method == 'POST':
       result = request.form
-      print(result)
       return render_template("home.html",result = result)
 
 
@@ -55,4 +62,8 @@ def runCode(code, tema, num_ej):
     os.remove(filename) 
     return result.stderr.decode('UTF-8')
 
-    
+def formato_funcion(tema, num_ej):
+    with open('pruebas/{}/{}.py'.format(tema,num_ej)) as pruebas:
+        nombre_funcion = pruebas.readline()
+        regex = re.compile('#\s*')
+        return regex.sub('',nombre_funcion).rstrip() + '\n' + '\t'
