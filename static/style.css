@@ -111,7 +111,7 @@ form {
     border: 1px solid #BBB;
     width: 45%;
     height: 80vh;
-    background-color: #d1d8e0;
+    background-color: #f7f1e3;
 }
 
 .enunciado {
@@ -200,3 +200,26 @@ span.zen {
     color: #e4cb58;
     font: inherit;
   }
+
+/*----------------------ABOUT---------------------*/
+
+.about {
+    color: #fff;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.about h1{
+    font-size: 5vh;
+}
+
+.about p{
+    line-height: 2.5vh;
+}

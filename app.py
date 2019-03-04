@@ -42,9 +42,12 @@ def result():
       result = request.form
       return render_template("home.html",result = result)
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
     return render_template('404.html'), 404
     
 # Clases (i will refactor this later)
