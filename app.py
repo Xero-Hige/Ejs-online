@@ -4,6 +4,7 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 from wtforms.validators import Required
 
 import subprocess
+from subprocess import PIPE
 import os
 import uuid
 import re
@@ -65,9 +66,17 @@ def runCode(code, tema, num_ej):
         file.write(code)
         file.write('\n\n')
         file.write(pruebas)
-    result = subprocess.run(['python3', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #result = subprocess.run(['python3', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(['python3', filename],stdout=PIPE, stderr=PIPE)
+    try:
+        outs, errs = proc.communicate(timeout=4)
+        errs = errs.decode('UTF-8')
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        outs, errs = proc.communicate()
+        errs = 'TimeoutExpires exception'
     os.remove(filename) 
-    return result.stderr.decode('UTF-8')
+    return errs
 
 def formato_funcion(tema, num_ej):
     with open('pruebas/{}/{}.py'.format(tema,num_ej)) as pruebas:
