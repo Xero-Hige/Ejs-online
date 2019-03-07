@@ -1,8 +1,8 @@
-# def lista_len(lista):
+# def invertir_lista(lista):
 
 def pruebas():
-    assert lista_len([1,3,2]) == 3
-    assert lista_len([]) == 0
+    assert invertir_lista([1,3,2]) == [2,3,1]
+    assert invertir_lista([]) == []
 
 
 pruebas()

@@ -1,5 +1,5 @@
 
-from flask import Flask , render_template, request, redirect, url_for
+from flask import Flask , render_template, request, redirect, url_for, send_file
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
@@ -27,6 +27,11 @@ def form(tema, num_ej):
     lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))
 
     if request.method == 'POST' and form.validate():
+        if request.form['submit'] == 'print':
+            filename = str(uuid.uuid4().hex) + '.py'
+            with open(filename,'w') as file:
+                file.write(form.editor.data)
+            return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
         result = str(runCode(form.editor.data, tema, num_ej))
         if result == '':
             result = "Pasaste todas las pruebas!" 
@@ -66,7 +71,6 @@ def runCode(code, tema, num_ej):
         file.write(code)
         file.write('\n\n')
         file.write(pruebas)
-    #result = subprocess.run(['python3', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     proc = subprocess.Popen(['python3', filename],stdout=PIPE, stderr=PIPE)
     try:
         outs, errs = proc.communicate(timeout=4)
