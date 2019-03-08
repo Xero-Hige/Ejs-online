@@ -27,7 +27,7 @@ def form(tema, num_ej):
     lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))
 
     if request.method == 'POST' and form.validate():
-        if request.form['submit'] == 'print':
+        if request.form['submit'] == 'Print':
             filename = str(uuid.uuid4().hex) + '.py'
             with open(filename,'w') as file:
                 file.write(form.editor.data)
@@ -39,7 +39,6 @@ def form(tema, num_ej):
                             form = form, tema = tema, num_ej = num_ej, result = result, 
                             ejs_tema = len(lista_ejs)
                             )
-
 
 
 @app.route('/home', methods = ['POST', 'GET'])
@@ -68,10 +67,8 @@ def runCode(code, tema, num_ej):
         pruebas = test.read()
     filename = str(uuid.uuid4().hex) + '.py'
     with open(filename,'w') as file:
-        file.write(code)
-        file.write('\n\n')
-        file.write(pruebas)
-    proc = subprocess.Popen(['python3', filename],stdout=PIPE, stderr=PIPE)
+        file.write('import unittest' + '\n' + code + '\n\n' + pruebas)
+    proc = subprocess.Popen(['python3', filename, '-v'],stdout=PIPE, stderr=PIPE)
     try:
         outs, errs = proc.communicate(timeout=4)
         errs = errs.decode('UTF-8')
@@ -86,4 +83,4 @@ def formato_funcion(tema, num_ej):
     with open('pruebas/{}/{}.py'.format(tema,num_ej)) as pruebas:
         nombre_funcion = pruebas.readline()
         regex = re.compile('#\s*')
-        return regex.sub('',nombre_funcion).rstrip() + '\n' + '\t'
+        return regex.sub('',nombre_funcion).rstrip() 
