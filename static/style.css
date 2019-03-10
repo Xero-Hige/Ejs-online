@@ -112,6 +112,7 @@ form {
     width: 45%;
     height: 80vh;
     background-color: #f7f1e3;
+    overflow-y: scroll
 }
 
 .enunciado {
@@ -222,4 +223,48 @@ span.zen {
 
 .about p{
     line-height: 2.5vh;
+}
+
+/*----------------------LISTADO---------------------*/
+
+.listado {
+    width: 100%;
+    margin-top: 10%;
+}
+
+.listado ul{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0 auto;
+    position: absolute;
+    width: 50%; 
+    left: 50%;
+    margin-left: -25%;
+}
+
+.listado ul li{
+    background: #ff7f82;
+    margin-top: 15px;
+    padding: 1em;
+    margin-bottom: .125em;
+    display: block;
+    list-style: none;
+    text-transform: uppercase;
+
+}
+
+.listado ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 4px 3px;
+    width: 100%;
+}
+
+.listado h2 {
+    color: #fff;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 2em;
 }

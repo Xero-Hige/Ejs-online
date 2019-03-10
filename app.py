@@ -20,7 +20,7 @@ def index():
 @app.route('/form/<tema>/<int:num_ej>', methods = ['POST', 'GET'])
 def form(tema, num_ej):
     form = CodeForm(request.form)
-    result = None
+    result = ""
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
 
@@ -33,8 +33,6 @@ def form(tema, num_ej):
                 file.write(form.editor.data)
             return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
         result = str(runCode(form.editor.data, tema, num_ej))
-        if result == '':
-            result = "Pasaste todas las pruebas!" 
     return render_template('home.html', 
                             form = form, tema = tema, num_ej = num_ej, result = result, 
                             ejs_tema = len(lista_ejs)
@@ -46,6 +44,11 @@ def result():
    if request.method == 'POST':
       result = request.form
       return render_template("home.html",result = result)
+
+@app.route('/listado/<tema>', methods = ['POST', 'GET'])
+def listado(tema):
+    ejercicios = getListaEjercicios(tema)
+    return render_template("listado.html", ejercicios = ejercicios, tema = tema)
 
 @app.route('/about')
 def about():
@@ -77,6 +80,7 @@ def runCode(code, tema, num_ej):
         outs, errs = proc.communicate()
         errs = 'TimeoutExpires exception'
     os.remove(filename) 
+    print(errs)
     return errs
 
 def formato_funcion(tema, num_ej):
@@ -84,3 +88,6 @@ def formato_funcion(tema, num_ej):
         nombre_funcion = pruebas.readline()
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
+
+def getListaEjercicios(tema):
+    return os.listdir("templates/ejercicios/{}".format(tema))
