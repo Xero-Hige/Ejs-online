@@ -6,21 +6,15 @@
 
     <div class="enunciados">
         <div class="enunciado">
-            {% include 'ejercicios/%s/%d.html' % (tema, num_ej) %}
-            {% if num_ej  >= ejs_tema %}
-                <form action="{{ url_for('form',tema = tema, num_ej = 1) }}">
-                    <input id="siguiente" type="submit" value="Siguiente" />
-                </form>
-            {% else %}
-            <form action="{{ url_for('form',tema = tema, num_ej = num_ej + 1) }}">
+            {% include 'ejercicios/%s/%s.html' % (tema, ej) %}
+            <form action="{{ url_for('form',tema = tema, ej = prox_ej) }}">
                     <input id="siguiente" type="submit" value="Siguiente" />
             </form>
-            {% endif %}
         </div>
     </div>
 
     <div class="code-editor">
-        <form method="POST" action="{{ url_for('form',tema = tema, num_ej = num_ej) }}">
+        <form method="POST" action="{{ url_for('form',tema = tema, ej = ej) }}">
             <textarea name="editor" id="editor">{{form.editor.data}}</textarea>
             <script>
                 var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {

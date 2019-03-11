@@ -16,15 +16,18 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/form', methods = ['POST', 'GET'])
-@app.route('/form/<tema>/<int:num_ej>', methods = ['POST', 'GET'])
-def form(tema, num_ej):
+@app.route('/form/<tema>/<string:ej>', methods = ['POST', 'GET'])
+def form(tema, ej):
     form = CodeForm(request.form)
     result = ""
+    num_ej = int(ej[0])
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
 
-    lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))
+    lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+    prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
         if request.form['submit'] == 'Print':
@@ -34,8 +37,8 @@ def form(tema, num_ej):
             return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
         result = str(runCode(form.editor.data, tema, num_ej))
     return render_template('home.html', 
-                            form = form, tema = tema, num_ej = num_ej, result = result, 
-                            ejs_tema = len(lista_ejs)
+                            form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
+                            ejs_tema = len(lista_ejs), prox_ej = prox_ej
                             )
 
 
@@ -45,14 +48,17 @@ def result():
       result = request.form
       return render_template("home.html",result = result)
 
+
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
 def listado(tema):
-    ejercicios = getListaEjercicios(tema)
+    ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjercicios(tema)))[::-1]
     return render_template("listado.html", ejercicios = ejercicios, tema = tema)
+
 
 @app.route('/about')
 def about():
     return render_template("about.html")
+
 
 @app.errorhandler(404)
 def page_not_found(e):
