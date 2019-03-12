@@ -8,6 +8,7 @@ from subprocess import PIPE
 import os
 import uuid
 import re
+import tempfile
 
 
 app = Flask(__name__)
@@ -51,7 +52,7 @@ def result():
 
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
 def listado(tema):
-    ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjercicios(tema)))[::-1]
+    ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema)))
     return render_template("listado.html", ejercicios = ejercicios, tema = tema)
 
 
@@ -95,5 +96,5 @@ def formato_funcion(tema, num_ej):
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
 
-def getListaEjercicios(tema):
-    return os.listdir("templates/ejercicios/{}".format(tema))
+def getListaEjerciciosOrdenada(tema):
+    return os.listdir("templates/ejercicios/{}".format(tema))[::-1]
