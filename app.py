@@ -5,19 +5,16 @@ from wtforms.validators import Required
 
 import subprocess
 from subprocess import PIPE
-import os
-import uuid
-import re
-import tempfile
-
+import os, uuid, re, tempfile
 
 app = Flask(__name__)
 
+# INDEX
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
+# CONSOLA PARA EJERCITAR
 @app.route('/form', methods = ['POST', 'GET'])
 @app.route('/form/<tema>/<string:ej>', methods = ['POST', 'GET'])
 def form(tema, ej):
@@ -42,25 +39,23 @@ def form(tema, ej):
                             ejs_tema = len(lista_ejs), prox_ej = prox_ej
                             )
 
-
-@app.route('/home', methods = ['POST', 'GET'])
-def result():
-   if request.method == 'POST':
-      result = request.form
-      return render_template("home.html",result = result)
-
-
+# LISTA DE EJERCICIOS POR TEMA
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
 def listado(tema):
     ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema)))
     return render_template("listado.html", ejercicios = ejercicios, tema = tema)
 
-
+# SOBRE LA PÁGINA
 @app.route('/about')
 def about():
     return render_template("about.html")
 
+# CARGAR UN NUEVO EJERCICIO
+@app.route('/subir')
+def subir():
+    return render_template("subir.html")
 
+# 404 PAGINA NO ENCONTRADA
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

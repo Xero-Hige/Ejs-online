@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="submitEj">
+    <div class="encabezado">
+        <h1>Subir Nuevo ejercicio</h1>
+
+        <p>
+            Para ingresar un nuevo archivo debe:
+            Cargar las pruebas con el siguiente formato....
+            Elegir a que categoria pertenece
+            Cargar la consigna con el siguiente formato....
+        </p>
+    </div>
+
+    <div class="agregarEj">
+        <form method=post enctype=multipart/form-data> 
+            <h2>Enunciado</h2>
+            Nombre ejercicio: <textarea name="nombre_ej" id="nombre_ej" cols="10" rows="1" oninput="modificarTitulo(this.value)"></textarea>
+            Nombre de la función a implementar: <textarea name="nombre_función" id="nombre_función" cols="10" rows="1"></textarea>
+            Enunciado: <textarea name="Enunciado" id="Enunciado" cols="30" rows="10" oninput="modificarParrafo(this.value)"></textarea>
+            <h2>Pruebas</h2>
+            <input type=file name=pruebas>
+            <input id="submit_ej" type=submit value=Upload>
+        </form>
+        <div class="visualizar">
+            <h2 id="tituloVis" class="enunciado"></h2>
+            <p id="parrafoEj" class="enunciado"></p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

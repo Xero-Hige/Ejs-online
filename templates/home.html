@@ -6,6 +6,8 @@
 
     <div class="enunciados">
         <div class="enunciado">
+            <h2>{{ tema[0] | upper}}{{tema[1:] }}</h2>
+            <h3>{{ ej[2:]  | replace("_", " ") }}</h3>
             {% include 'ejercicios/%s/%s.html' % (tema, ej) %}
             <form action="{{ url_for('form',tema = tema, ej = prox_ej) }}">
                 <input id="siguiente" type="submit" value="Siguiente" />
