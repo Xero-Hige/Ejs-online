@@ -99,8 +99,11 @@ def runCode(code, tema, num_ej):
         errs = 'TimeoutExpires exception'
 
     # Remove the user folder and container
-    command = f"./CleanContainers.sh && rm -rf ./{folder_name}".split()
+    command = f"rm -rf ./{folder_name}".split()
     subprocess.Popen(command) #Python remove dir does not allow remove a non empty folder
+
+    command = f"./CleanContainers.sh".split()
+    subprocess.Popen(command)
 
     print(errs)
     return errs
