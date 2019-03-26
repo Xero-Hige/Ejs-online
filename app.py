@@ -28,7 +28,6 @@ def form(tema, ej):
         form.editor.data = formato_funcion(tema, num_ej)
 
     lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}".format(tema)))
-    print(lista_ejs)
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
