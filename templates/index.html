@@ -1,19 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div class="index">
-    <h1 class="index">Ejercicios.</h1>
 
-    <div class="buttons-index">
-        <button onclick="window.location.href='listado/tarea'">Tareas</button>
-        <button onclick="window.location.href='listado/listas'">Listas</button>
-        <button onclick="window.location.href='listado/listas'">Tuplas</button>
-        <button onclick="window.location.href='listado/colas'">Colas</button>
-        <button onclick="window.location.href='listado/pilas'">Pilas</button>
-        <button onclick="window.location.href='listado/recusion'">Recursion</button>
-        <button onclick="window.location.href='listado/diccionarios'">Diccionarios</button>
-        <button onclick="window.location.href='listado/listas_enlazadas'">Listas Enlazadas</button>
-    </div>
+<div class="listado">
+    <h2>Ejercicos</h2>
+    <ul>
+        <li><a href="/guia">Guia de Ejercicos</a></li>
+        <li><a href="#">Extras</a></li>
+    </ul>
 </div>
 
 {% endblock %}

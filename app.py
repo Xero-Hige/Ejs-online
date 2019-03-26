@@ -2,12 +2,15 @@ from flask import Flask , render_template, request, redirect, url_for, send_file
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
+from clases.Db import Db
+
 import subprocess
 from subprocess import PIPE
 import os, uuid, re, tempfile
 import time
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # INDEX
 @app.route('/')
@@ -24,7 +27,8 @@ def form(tema, ej):
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
 
-    lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+    lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}".format(tema)))
+    print(lista_ejs)
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
@@ -42,8 +46,13 @@ def form(tema, ej):
 # LISTA DE EJERCICIOS POR TEMA
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
 def listado(tema):
-    ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema)))
+    ejercicios = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema))))
     return render_template("listado.html", ejercicios = ejercicios, tema = tema)
+
+@app.route('/guia', methods = ['POST', 'GET'])
+def guia():
+    guia = os.listdir("./templates/ejercicios") 
+    return render_template("guia.html", guia = guia)
 
 # SOBRE LA PÁGINA
 @app.route('/about')
@@ -116,3 +125,9 @@ def formato_funcion(tema, num_ej):
 
 def getListaEjerciciosOrdenada(tema):
     return os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+
+def ordenar_lista_directorio(lista):
+    return sorted(lista,key=lambda nombre: nombre[0])
+
+
+
