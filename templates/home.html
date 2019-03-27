@@ -10,7 +10,7 @@
             <button onclick="mostrarEnunciado(false)" id="bt-consola">Consola</button>
         </div>
         <div class="test-result" id="consola-result" style="display:none;">
-            {{result}}
+                <p>{{result | safe}}</p>
         </div>
         <div class="enunciado" id="ver-enunciado">
             <div class="content">
@@ -51,9 +51,9 @@
             {{ form.submit }}
             <input id="submit" name="submit" type="submit" value="Print">
         </form>
-        <textarea class='terminal' name="result" id="result" cols="30" rows="10" readonly>
+        <!-- <textarea class='terminal' name="result" id="result" cols="30" rows="10" readonly>
             {{result}}
-        </textarea>
+        </textarea> -->
     </div>
 
 

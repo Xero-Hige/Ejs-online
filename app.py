@@ -8,6 +8,7 @@ import subprocess
 from subprocess import PIPE
 import os, uuid, re, tempfile
 import time
+import re
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -36,7 +37,7 @@ def form(tema, ej):
             with open(filename,'w') as file:
                 file.write(form.editor.data)
             return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
-        result = str(runCode(form.editor.data, tema, num_ej))
+        result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
                             ejs_tema = len(lista_ejs), prox_ej = prox_ej
@@ -128,5 +129,10 @@ def getListaEjerciciosOrdenada(tema):
 def ordenar_lista_directorio(lista):
     return sorted(lista,key=lambda nombre: nombre[0])
 
-
-
+def formatear_salida(salida):
+    salida = salida.replace('\n','<br>')
+    salida = re.sub(r'(FAIL: test_[\w\s\(\.\)]*)', '<span id="error">'+ r'\1' + '</span>', salida)
+    salida = salida.replace("FAIL", '<span id="rojo">FAIL</span>')
+    salida = salida.replace("ok", '<span id="verde">ok</span>')
+    salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
+    return salida

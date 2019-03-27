@@ -28,12 +28,13 @@ body {
     margin-top: 9vh;
     width: 100%;
     margin-left: 5%;
+    height: 80vh;
 }
 
 .code-editor {
     width: 45%;
     min-width: 600px;
-    height: 80vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -45,6 +46,10 @@ input {
     padding: 10px 30px;
     transition: background 0.3s, color 0.3s;
     border: 1px solid #BBB;
+}
+
+.code-editor input{
+    margin-top: 5%;
 }
 
 #submit {
@@ -69,31 +74,28 @@ input {
 
 /*----------*/
 
-.terminal textarea {
+/* .terminal textarea {
     border: 1px solid #BBB;
     width: 100%;
     resize: none;
-}
+} */
 
-.code-editor form {
+.code-editor form{
     height: 100%;
 }
 
-#editor {
-    height: 80vh;
-}
-
-#result {
+/* #result {
     color: white;
     background-color: #1e272e;
     font-weight: 550;
-}
+} */
+
 
 .enunciados {
-    border: 1px solid #BBB;
+    border: 1px solid #fbc531;
     width: 45%;
     min-width: 600px;
-    height: 80vh;
+    height: 100%;
     background-color: #f7f1e3;
     display: flex;
     flex-direction: column;
@@ -119,10 +121,31 @@ input {
     color: white;
 }
 
+/* ---- etiquetas ---- */
+
+#rojo {
+    color: red;
+}
+
+#verde {
+    color: greenyellow;
+}
+
+#funcion {
+    color: orange;
+}
+
+#error {
+    background: #40739e;
+}
+
+
+/* ---- \etiquetas ---- */
+
 .enunciado h2 {
     font-size: 30px;
     color: #1e272e;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .enunciado h3 {
@@ -143,7 +166,8 @@ input {
 }
 
 .bar_enun_code button{
-    border: 3px solid #fbc531;
+    border-top: 3px solid #fbc531;
+    border-bottom: none;
     width: 50%;
     padding: 7px 3px;
     background: inherit;
@@ -156,7 +180,7 @@ input {
 
 #bt-consola {
     color: #dcdde1;
-    background: #353b48;
+    background: #1e272e;
 }
 
 /*----------------------INDEX---------------------*/
