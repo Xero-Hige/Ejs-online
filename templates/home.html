@@ -9,10 +9,14 @@
             <button onclick="mostrarEnunciado(true)" id="bt-enunciado">Enunciado</button>
             <button onclick="mostrarEnunciado(false)" id="bt-consola">Consola</button>
         </div>
-        <div class="test-result" id="consola-result" style="display:none;">
+        <div class="test-result" id="consola-result" style="display:{{consola_display}};">
                 <p>{{result | safe}}</p>
         </div>
+        {% if consola_display == 'none'%}
         <div class="enunciado" id="ver-enunciado">
+        {% else %}
+        <div class="enunciado" id="ver-enunciado" style="display:none;">
+        {% endif %}
             <div class="content">
                 <h2>{{ tema[0] | upper}}{{tema[1:] }}</h2>
                 <h3>{{ ej[2:]  | replace("_", " ") }}</h3>

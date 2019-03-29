@@ -119,6 +119,7 @@ input {
 .test-result{
     background: #1e272e;
     color: white;
+    padding: 15px;
 }
 
 /* ---- etiquetas ---- */

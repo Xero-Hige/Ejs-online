@@ -24,6 +24,7 @@ def index():
 def form(tema, ej):
     form = CodeForm(request.form)
     result = ""
+    consola_display = 'none'
     num_ej = int(ej[0])
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
@@ -32,6 +33,7 @@ def form(tema, ej):
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
+        consola_display = 'visible'
         if request.form['submit'] == 'Print':
             filename = str(uuid.uuid4().hex) + '.py'
             with open(filename,'w') as file:
@@ -40,7 +42,7 @@ def form(tema, ej):
         result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
-                            ejs_tema = len(lista_ejs), prox_ej = prox_ej
+                            ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display
                             )
 
 # LISTA DE EJERCICIOS POR TEMA
@@ -132,7 +134,7 @@ def ordenar_lista_directorio(lista):
 def formatear_salida(salida):
     salida = salida.replace('\n','<br>')
     salida = re.sub(r'(FAIL: test_[\w\s\(\.\)]*)', '<span id="error">'+ r'\1' + '</span>', salida)
-    salida = salida.replace("FAIL", '<span id="rojo">FAIL</span>')
-    salida = salida.replace("ok", '<span id="verde">ok</span>')
+    salida = re.sub(r'(FAIL(ED)?)', '<span id="rojo">' + r'\1' + '</span>', salida)
+    salida = re.sub(r'(ok|OK)', '<span id="verde">' + r'\1' + '</span>', salida)
     salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
     return salida
