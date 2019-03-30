@@ -1,4 +1,4 @@
-from flask import Flask , render_template, request, redirect, url_for, send_file
+from flask import Flask , render_template, request, redirect, url_for, send_file, after_this_request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
@@ -38,6 +38,12 @@ def form(tema, ej):
             filename = str(uuid.uuid4().hex) + '.py'
             with open(filename,'w') as file:
                 file.write(form.editor.data)
+            # Remuevo el archivo creado para descargar el código
+            @after_this_request 
+            def remove_file(response): 
+                os.remove(filename) 
+                return response 
+
             return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
         result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
