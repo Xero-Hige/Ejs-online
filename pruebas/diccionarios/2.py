@@ -1,7 +1,5 @@
 # def contador_palabras(cadena):
 
-import unittest
-
 class TestStringMethods(unittest.TestCase):
 
     def test_cadena_vacia_devuelve_diccionario_vacio(self):

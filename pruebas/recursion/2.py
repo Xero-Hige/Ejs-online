@@ -1,7 +1,5 @@
 # def es_potencia_de(a,b):
 
-import unittest
-
 class TestStringMethods(unittest.TestCase):
 
     def test_25_es_potencia_de_5(self):

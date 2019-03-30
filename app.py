@@ -44,7 +44,7 @@ def form(tema, ej):
                 os.remove(filename) 
                 return response 
 
-            return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
+            return send_file(filename,  attachment_filename=ej + '.py', as_attachment=True)
         result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
@@ -122,7 +122,6 @@ def runCode(code, tema, num_ej):
     command = f"./CleanContainers.sh".split()
     subprocess.Popen(command)
 
-    print(errs)
     return errs
 
 def formato_funcion(tema, num_ej):
@@ -135,7 +134,7 @@ def getListaEjerciciosOrdenada(tema):
     return os.listdir("templates/ejercicios/{}".format(tema))[::-1]
 
 def ordenar_lista_directorio(lista):
-    return sorted(lista,key=lambda nombre: nombre[0])
+    return sorted(lista, key=lambda nombre: nombre[0])
 
 def formatear_salida(salida):
     salida = salida.replace('\n','<br>')

@@ -1,7 +1,5 @@
 # def cantidad_digitos(n):
 
-import unittest
-
 class TestStringMethods(unittest.TestCase):
 
     def test_numero_de_un_digito_tiene_largo_1(self):

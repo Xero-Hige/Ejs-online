@@ -1,7 +1,5 @@
 # def dividir_por_enteros(lista, k):
 
-import unittest
-
 class TestStringMethods(unittest.TestCase):
 
     def test_k_mayor_a_todos(self):
