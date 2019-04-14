@@ -16,12 +16,13 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # INDEX
 @app.route('/')
 def index():
-    return render_template('index.html')
+    opciones = os.listdir("templates/ejercicios")
+    return render_template('index.html', opciones = opciones)
 
 # CONSOLA PARA EJERCITAR
 @app.route('/form', methods = ['POST', 'GET'])
-@app.route('/form/<tema>/<string:ej>', methods = ['POST', 'GET'])
-def form(tema, ej):
+@app.route('/form/<seccion>/<tema>/<string:ej>', methods = ['POST', 'GET'])
+def form(seccion, tema, ej):
     form = CodeForm(request.form)
     result = ""
     consola_display = 'none'
@@ -48,14 +49,19 @@ def form(tema, ej):
         result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
-                            ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display
+                            ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display,
+                            seccion = seccion
                             )
 
 # LISTA DE EJERCICIOS POR TEMA
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
-def listado(tema):
-    ejercicios = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema))))
-    return render_template("listado.html", ejercicios = ejercicios, tema = tema)
+@app.route('/listado/<tema>/<ejs>' , methods = ['POST', 'GET'])
+def listado(tema, ejs = None):
+    secciones = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaSeccionOrdenada(tema))))
+    if (ejs):
+        ejs = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ejs)))
+        print(ejs)
+    return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejs)
 
 @app.route('/guia', methods = ['POST', 'GET'])
 def guia():
@@ -130,8 +136,11 @@ def formato_funcion(tema, num_ej):
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
 
-def getListaEjerciciosOrdenada(tema):
+def getListaSeccionOrdenada(tema):
     return os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+
+def getListaEjerciciosOrdenada(tema, ejs):
+    return os.listdir("templates/ejercicios/{}/{}".format(tema, ejs))[::-1]
 
 def ordenar_lista_directorio(lista):
     return sorted(lista, key=lambda nombre: nombre[0])

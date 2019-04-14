@@ -5,8 +5,9 @@
 <div class="listado">
     <h2>Ejercicos</h2>
     <ul>
-        <li><a href="/guia">Guia de Ejercicos</a></li>
-        <li><a href="#">Extras</a></li>
+        {% for opcion in opciones %}
+            <li><a href="/listado/{{opcion}}">{{ opcion | replace("_", " ")}}</a></li>
+        {% endfor %}
     </ul>
 </div>
 
