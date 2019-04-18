@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="listado">
+    <h2>{{tema}}</h2>
+    <ul>
+        {% for ejercicio in ejercicios %}
+            <li><a href="/form/{{tema}}/{{seccion}}/{{ejercicio}}">{{ ejercicio | replace("_", " ")}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

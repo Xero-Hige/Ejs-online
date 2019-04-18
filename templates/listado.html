@@ -7,7 +7,7 @@
     <ul>
         {% if ejercicios %}
             {% for ejercicio in ejercicios %}
-                <li><a href="/form/{{tema}}/{{ejercicio}}">{{ ejercicio | replace("_", " ")}}</a></li>
+                <li><a href="/form/{{tema}}/{{ej}}/{{ejercicio}}">{{ ejercicio | replace("_", " ")}}</a></li>
             {% endfor %}
         {% else %}
             {% for seccion in secciones %}

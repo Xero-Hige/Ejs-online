@@ -28,7 +28,7 @@ def form(seccion, tema, ej):
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
 
-    lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}".format(tema)))
+    lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}/{}".format(seccion,tema)))
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
@@ -53,13 +53,15 @@ def form(seccion, tema, ej):
 
 # LISTA DE EJERCICIOS POR TEMA
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
-@app.route('/listado/<tema>/<ejs>' , methods = ['POST', 'GET'])
-def listado(tema, ejs = None):
+@app.route('/listado/<tema>/<ej>' , methods = ['POST', 'GET'])
+def listado(tema, ej = None):
     secciones = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaSeccionOrdenada(tema))))
-    if (ejs):
-        ejs = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ejs)))
-        print(ejs)
-    return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejs)
+    ejercicios = None
+    if (ej):
+        ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ej)))
+        print(ej)
+    return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejercicios, ej = ej)
+
 
 @app.route('/guia', methods = ['POST', 'GET'])
 def guia():
