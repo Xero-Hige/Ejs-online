@@ -2,8 +2,6 @@ from flask import Flask , render_template, request, redirect, url_for, send_file
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
-from clases.Db import Db
-
 import subprocess
 from subprocess import PIPE
 import os, uuid, re, tempfile
