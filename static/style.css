@@ -276,7 +276,10 @@ span.zen {
 
 .listado {
     width: 100%;
-    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
 }
 
 .listado ul{
@@ -284,10 +287,8 @@ span.zen {
     flex-direction: column;
     list-style: none;
     margin: 0 auto;
-    position: absolute;
-    width: 50%; 
-    left: 50%;
-    margin-left: -25%;
+    width: 60%; 
+    padding-bottom: 30px;
 }
 
 .listado ul li{
@@ -314,6 +315,7 @@ span.zen {
     text-align: center;
     text-transform: capitalize;
     font-size: 2em;
+    margin-top: 3em;
 }
 
 /*----------------------SUBIR---------------------*/
