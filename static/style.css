@@ -236,40 +236,43 @@ input {
     align-content: center;
     align-items: center;
     text-align: center;
-    margin: 5% 5% auto 5%;
+    padding: 5em;
 }
-
 
 .not-found h2{
     font-size: 5vh;
 }
 
-span.zen { 
+span.zen , .not-found a{ 
     color: #e4cb58;
     font: inherit;
-  }
+}
+
+.not-found a{
+    text-decoration: none;
+}
 
 /*----------------------ABOUT---------------------*/
 
 .about {
     color: #fff;
-    justify-content: center;
     align-content: center;
-    align-items: center;
+    justify-content: center;
     text-align: center;
     min-height: 10vh;
     display: flex;
     flex-wrap: wrap;
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 .about h1{
-    font-size: 5vh;
+    font-size: 6vh;
+    color: #ff7f82;
 }
 
 .about p{
-    line-height: 2.5vh;
+    line-height: 4vh;
+    text-align: center;
+    padding: 0em 6em 4em 7em;
 }
 
 /*----------------------LISTADO---------------------*/
