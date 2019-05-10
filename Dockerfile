@@ -1,6 +1,6 @@
 FROM debian:testing
 
-MAINTAINER TuNick <TuMail>
+MAINTAINER Florencia97 <florrr1997@gmail.com>
 WORKDIR /
 
 RUN apt-get update && \

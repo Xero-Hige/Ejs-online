@@ -1,7 +1,5 @@
 # def diferencia(x1, y1, z1, x2, y2, z2):
 
-import unittest
-
 class TestTarea1(unittest.TestCase):
 
     def test_diferencia(self):

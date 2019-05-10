@@ -1,8 +1,6 @@
 # def pedir_entero(mensaje, min, max):
 
 from unittest.mock import patch
-import unittest
-
 
 class PedirEnteroEnRangoTestCase(unittest.TestCase):
 

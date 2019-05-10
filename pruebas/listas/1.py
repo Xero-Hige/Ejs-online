@@ -1,7 +1,5 @@
 # def lista_ordenada(lista):
 
-import unittest
-
 class TestStringMethods(unittest.TestCase):
 
     def test_lista_no_ordenada(self):

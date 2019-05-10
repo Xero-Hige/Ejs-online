@@ -1,5 +1,4 @@
 # def norma(x, y, z):
-import unittest
 
 class TestTarea1(unittest.TestCase):
 

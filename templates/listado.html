@@ -5,9 +5,15 @@
 <div class="listado">
     <h2>{{tema}}</h2>
     <ul>
-        {% for ejercicio in ejercicios %}
-            <li><a href="/form/{{tema}}/{{ejercicio}}">{{ ejercicio | replace("_", " ")}}</a></li>
-        {% endfor %}
+        {% if ejercicios %}
+            {% for ejercicio in ejercicios %}
+                <li><a href="/form/{{tema}}/{{ej}}/{{ejercicio}}">{{ ejercicio | replace("_", " ")}}</a></li>
+            {% endfor %}
+        {% else %}
+            {% for seccion in secciones %}
+                <li><a href="/listado/{{tema}}/{{seccion}}">{{ seccion | replace("_", " ")}}</a></li>
+            {% endfor %}
+        {% endif %}
     </ul>
 </div>
 

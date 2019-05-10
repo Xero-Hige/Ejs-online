@@ -1,4 +1,4 @@
-from flask import Flask , render_template, request, redirect, url_for, send_file
+from flask import Flask , render_template, request, redirect, url_for, send_file, after_this_request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
@@ -6,44 +6,67 @@ import subprocess
 from subprocess import PIPE
 import os, uuid, re, tempfile
 import time
+import re
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # INDEX
 @app.route('/')
 def index():
-    return render_template('index.html')
+    opciones = os.listdir("templates/ejercicios")
+    return render_template('index.html', opciones = opciones)
 
 # CONSOLA PARA EJERCITAR
 @app.route('/form', methods = ['POST', 'GET'])
-@app.route('/form/<tema>/<string:ej>', methods = ['POST', 'GET'])
-def form(tema, ej):
+@app.route('/form/<seccion>/<tema>/<string:ej>', methods = ['POST', 'GET'])
+def form(seccion, tema, ej):
     form = CodeForm(request.form)
     result = ""
+    consola_display = 'none'
     num_ej = int(ej[0])
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, num_ej)
 
-    lista_ejs = os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+    lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}/{}".format(seccion,tema)))
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
 
     if request.method == 'POST' and form.validate():
+        consola_display = 'visible'
         if request.form['submit'] == 'Print':
             filename = str(uuid.uuid4().hex) + '.py'
             with open(filename,'w') as file:
                 file.write(form.editor.data)
-            return send_file(filename,  attachment_filename='ej.py', as_attachment=True)
-        result = str(runCode(form.editor.data, tema, num_ej))
+            # Remuevo el archivo creado para descargar el código
+            @after_this_request 
+            def remove_file(response): 
+                os.remove(filename) 
+                return response 
+
+            return send_file(filename,  attachment_filename=ej + '.py', as_attachment=True)
+        result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
-                            ejs_tema = len(lista_ejs), prox_ej = prox_ej
+                            ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display,
+                            seccion = seccion
                             )
 
 # LISTA DE EJERCICIOS POR TEMA
 @app.route('/listado/<tema>', methods = ['POST', 'GET'])
-def listado(tema):
-    ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema)))
-    return render_template("listado.html", ejercicios = ejercicios, tema = tema)
+@app.route('/listado/<tema>/<ej>' , methods = ['POST', 'GET'])
+def listado(tema, ej = None):
+    secciones = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaSeccionOrdenada(tema))))
+    ejercicios = None
+    if (ej):
+        ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ej)))
+        print(ej)
+    return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejercicios, ej = ej)
+
+
+@app.route('/guia', methods = ['POST', 'GET'])
+def guia():
+    guia = os.listdir("./templates/ejercicios") 
+    return render_template("guia.html", guia = guia)
 
 # SOBRE LA PÁGINA
 @app.route('/about')
@@ -105,7 +128,6 @@ def runCode(code, tema, num_ej):
     command = f"./CleanContainers.sh".split()
     subprocess.Popen(command)
 
-    print(errs)
     return errs
 
 def formato_funcion(tema, num_ej):
@@ -114,5 +136,19 @@ def formato_funcion(tema, num_ej):
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
 
-def getListaEjerciciosOrdenada(tema):
+def getListaSeccionOrdenada(tema):
     return os.listdir("templates/ejercicios/{}".format(tema))[::-1]
+
+def getListaEjerciciosOrdenada(tema, ejs):
+    return os.listdir("templates/ejercicios/{}/{}".format(tema, ejs))[::-1]
+
+def ordenar_lista_directorio(lista):
+    return sorted(lista, key=lambda nombre: nombre[0])
+
+def formatear_salida(salida):
+    salida = salida.replace('\n','<br>')
+    salida = re.sub(r'(FAIL: test_[\w\s\(\.\)]*)', '<span id="error">'+ r'\1' + '</span>', salida)
+    salida = re.sub(r'(FAIL(ED)?)', '<span id="rojo">' + r'\1' + '</span>', salida)
+    salida = re.sub(r'(ok|OK)', '<span id="verde">' + r'\1' + '</span>', salida)
+    salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
+    return salida
