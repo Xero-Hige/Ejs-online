@@ -58,7 +58,7 @@ def listado(tema, ej = None):
     secciones = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaSeccionOrdenada(tema))))
     ejercicios = None
     if (ej):
-        ejercicios = list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ej)))
+        ejercicios = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ej))))
         print(ej)
     return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejercicios, ej = ej)
 
@@ -143,7 +143,7 @@ def getListaEjerciciosOrdenada(tema, ejs):
     return os.listdir("templates/ejercicios/{}/{}".format(tema, ejs))[::-1]
 
 def ordenar_lista_directorio(lista):
-    return sorted(lista, key=lambda nombre: nombre[0])
+    return sorted(lista, key = lambda nombre: nombre[0])
 
 def formatear_salida(salida):
     salida = salida.replace('\n','<br>')
