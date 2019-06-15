@@ -72,24 +72,11 @@ input {
     color: #ffdd59;
 }
 
-/*----------*/
-
-/* .terminal textarea {
-    border: 1px solid #BBB;
-    width: 100%;
-    resize: none;
-} */
-
 .code-editor form{
     height: 100%;
 }
 
-/* #result {
-    color: white;
-    background-color: #1e272e;
-    font-weight: 550;
-} */
-
+/*----------------------ENUNCIADO---------------------*/
 
 .enunciados {
     border: 1px solid #fbc531;
@@ -114,6 +101,16 @@ input {
 
 .enunciado{
     background: #dcdde1;
+}
+
+.enunciado .content h2{
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: -12px;
+}
+
+.enunciado .content h3{
+    color: #7f8c8d;
 }
 
 .test-result{
@@ -273,6 +270,11 @@ span.zen , .not-found a{
     line-height: 4vh;
     text-align: center;
     padding: 0em 6em 4em 7em;
+}
+
+.about a{
+    color: #f1c40f;
+    text-decoration: none;
 }
 
 /*----------------------LISTADO---------------------*/
