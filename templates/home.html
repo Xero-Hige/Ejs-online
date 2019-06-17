@@ -21,7 +21,7 @@
                 <h2>{{ tema[0] | upper}}{{tema[1:] | replace("_", " ") }}</h2>
                 <h3>{{ ej[2:]  | replace("_", " ") }}</h3>
                 {% include 'ejercicios/%s/%s/%s.html' % (seccion, tema, ej) %}
-                <form action="{{ url_for('form', seccion = seccion, tema = tema, ej = prox_ej) }}">
+                <form action="{{ url_for('form.form', seccion = seccion, tema = tema, ej = prox_ej) }}">
                     <input id="siguiente" type="submit" value="Siguiente" />
                 </form>
             </div>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="code-editor">
-        <form method="POST" action="{{ url_for('form', seccion = seccion, tema = tema, ej = ej) }}">
+        <form method="POST" action="{{ url_for('form.form', seccion = seccion, tema = tema, ej = ej) }}">
             <textarea name="editor" id="editor">{{form.editor.data}}</textarea>
             <script>
                 function betterTab(cm) {
