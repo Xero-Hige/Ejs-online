@@ -104,6 +104,7 @@ def formatear_salida(salida):
     salida = salida.replace('\n','<br>')
     salida = re.sub(r'(FAIL: test_[\w\s\(\.\)]*)', '<span id="error">'+ r'\1' + '</span>', salida)
     salida = re.sub(r'(FAIL(ED)?)', '<span id="rojo">' + r'\1' + '</span>', salida)
-    salida = re.sub(r'(ok|OK)', '<span id="verde">' + r'\1' + '</span>', salida)
+    salida = re.sub(r'(ok)', '<span id="verde">' + r'\1' + '</span>', salida)
+    salida = re.sub(r'(OK)', '<span id="verde">' + 'Pasaste todas las pruebas!' + '</span>', salida)
     salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
     return salida

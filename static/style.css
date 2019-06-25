@@ -49,7 +49,7 @@ input {
 }
 
 .code-editor input{
-    margin-top: 5%;
+    margin-top: 0.9em;
 }
 
 #submit {
