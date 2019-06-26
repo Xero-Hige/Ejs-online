@@ -7,11 +7,10 @@ listado_blueprint = Blueprint('listado', __name__)
 @listado_blueprint.route('/listado/<tema>', methods = ['POST', 'GET'])
 @listado_blueprint.route('/listado/<tema>/<ej>' , methods = ['POST', 'GET'])
 def listado(tema, ej = None):
-    secciones = list(map(lambda s: s.replace('.html','') , getListaSeccionOrdenada(tema)))
+    secciones = getListaSeccionOrdenada(tema)
     ejercicios = None
     if (ej):
-        ejercicios = ordenar_lista_directorio(list(map(lambda s: s.replace('.html','') , getListaEjerciciosOrdenada(tema, ej))))
-        print(ej)
+        ejercicios = getListaEjerciciosOrdenada(tema, ej)
     return render_template("listado.html", secciones = secciones, tema = tema, ejercicios = ejercicios, ej = ej)
 
 
@@ -22,12 +21,9 @@ def getListaSeccionOrdenada(tema):
             list_secciones.append(seccion)
     return list_secciones
 
-def getListaEjerciciosOrdenada(tema, ejs):
+def getListaEjerciciosOrdenada(tema, ej):
     list_secciones = []
-    with open(f"info/{ejs}.csv") as carpetas:
+    with open(f"info/{ej}.csv") as carpetas:
         for seccion in carpetas:
             list_secciones.append(seccion)
     return list_secciones
-
-def ordenar_lista_directorio(lista):
-    return sorted(lista, key = lambda nombre: nombre[0])

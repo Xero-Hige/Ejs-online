@@ -18,9 +18,10 @@ def form(seccion, tema, ej):
     form = CodeForm(request.form)
     result = ""
     consola_display = 'none'
-    num_ej = int(ej[0])
+    pruebas = ej
+    num_ej = 1 #Modificar
     if not form.editor.data:
-        form.editor.data = formato_funcion(tema, num_ej)
+        form.editor.data = formato_funcion(tema, pruebas)
 
     lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}/{}".format(seccion,tema)))
     prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
@@ -37,8 +38,9 @@ def form(seccion, tema, ej):
                 os.remove(filename) 
                 return response 
 
-            return send_file(filename,  attachment_filename=ej + '.py', as_attachment=True)
-        result = formatear_salida( str(runCode(form.editor.data, tema, num_ej)))
+            return send_file(filename,  attachment_filename = ej + '.py', as_attachment=True)
+        print(ej)
+        result = formatear_salida( str(runCode(form.editor.data, tema, pruebas)))
     return render_template('home.html', 
                             form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
                             ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display,
@@ -50,9 +52,9 @@ class CodeForm(Form):
     editor = TextAreaField('editor')
     submit = SubmitField('Submit')
 
-def runCode(code, tema, num_ej):
+def runCode(code, tema, pruebas_ej):
     pruebas = ''
-    with open(f'pruebas/{tema}/{num_ej}.py') as test:
+    with open(f'pruebas/{tema}/{pruebas_ej}.py') as test:
         pruebas = test.read()
 
     base_name = str(uuid.uuid4().hex)
@@ -91,8 +93,8 @@ def runCode(code, tema, num_ej):
 
     return errs
 
-def formato_funcion(tema, num_ej):
-    with open('pruebas/{}/{}.py'.format(tema,num_ej)) as pruebas:
+def formato_funcion(tema, pruebas_ej):
+    with open('pruebas/{}/{}.py'.format(tema,pruebas_ej)) as pruebas:
         nombre_funcion = pruebas.readline()
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
