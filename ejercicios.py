@@ -19,12 +19,12 @@ def form(seccion, tema, ej):
     result = ""
     consola_display = 'none'
     pruebas = ej
-    num_ej = 1 #Modificar
     if not form.editor.data:
         form.editor.data = formato_funcion(tema, pruebas)
 
     lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}/{}".format(seccion,tema)))
-    prox_ej = lista_ejs[( num_ej) % len(lista_ejs)].replace('.html','')
+    prox_ej = getProximoEjercicio(tema, ej)
+    print(prox_ej)
 
     if request.method == 'POST' and form.validate():
         consola_display = 'visible'
@@ -42,8 +42,8 @@ def form(seccion, tema, ej):
         print(ej)
         result = formatear_salida( str(runCode(form.editor.data, tema, pruebas)))
     return render_template('home.html', 
-                            form = form, tema = tema, ej = ej, num_ej = num_ej, result = result, 
-                            ejs_tema = len(lista_ejs), prox_ej = prox_ej, consola_display = consola_display,
+                            form = form, tema = tema, ej = ej, result = result, ejs_tema = len(lista_ejs),
+                            prox_ej = prox_ej, consola_display = consola_display,
                             seccion = seccion
                             )
 
@@ -94,7 +94,7 @@ def runCode(code, tema, pruebas_ej):
     return errs
 
 def formato_funcion(tema, pruebas_ej):
-    with open('pruebas/{}/{}.py'.format(tema,pruebas_ej)) as pruebas:
+    with open(f"pruebas/{tema}/{pruebas_ej}.py") as pruebas:
         nombre_funcion = pruebas.readline()
         regex = re.compile('#\s*')
         return regex.sub('',nombre_funcion).rstrip() 
@@ -110,3 +110,17 @@ def formatear_salida(salida):
     salida = re.sub(r'(OK)', '<span id="verde">' + 'Pasaste todas las pruebas!' + '</span>', salida)
     salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
     return salida
+
+def getProximoEjercicio(tema, ej):
+    #Refactorizar, lo hago rápido
+    list_ejs = []
+    num_ej = 0
+    with open(f"info/{tema}.csv") as seccion:
+        for i,ejercicio in enumerate(seccion):
+            list_ejs.append(ejercicio)
+            if ejercicio.rstrip('\n') == ej:
+                num_ej = i
+    print(num_ej)
+    print(list_ejs)
+    return list_ejs[ (num_ej + 1) % len(list_ejs)].rstrip('\n')
+

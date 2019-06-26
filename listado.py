@@ -22,8 +22,8 @@ def getListaSeccionOrdenada(tema):
     return list_secciones
 
 def getListaEjerciciosOrdenada(tema, ej):
-    list_secciones = []
-    with open(f"info/{ej}.csv") as carpetas:
-        for seccion in carpetas:
-            list_secciones.append(seccion)
-    return list_secciones
+    list_ejs = []
+    with open(f"info/{ej}.csv") as seccion:
+        for ej in seccion:
+            list_ejs.append(ej)
+    return list_ejs
