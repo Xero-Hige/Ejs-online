@@ -7,6 +7,8 @@ listado_blueprint = Blueprint('listado', __name__)
 @listado_blueprint.route('/listado/<tema>', methods = ['POST', 'GET'])
 @listado_blueprint.route('/listado/<tema>/<ej>' , methods = ['POST', 'GET'])
 def listado(tema, ej = None):
+    if (not temaValido(tema)):
+        return render_template('404.html'), 404
     secciones = getListaSeccionOrdenada(tema)
     ejercicios = None
     if (ej):
@@ -16,14 +18,17 @@ def listado(tema, ej = None):
 
 def getListaSeccionOrdenada(tema):
     list_secciones = []
-    with open('info/carpetas.csv') as carpetas:
+    with open(f"info/{tema}/carpetas.csv") as carpetas:
         for seccion in carpetas:
             list_secciones.append(seccion)
     return list_secciones
 
 def getListaEjerciciosOrdenada(tema, ej):
     list_ejs = []
-    with open(f"info/{ej}.csv") as seccion:
+    with open(f"info/{tema}/{ej}.csv") as seccion:
         for ej in seccion:
             list_ejs.append(ej)
     return list_ejs
+
+def temaValido(tema):
+    return tema in os.listdir("info")

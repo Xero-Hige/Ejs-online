@@ -11,13 +11,13 @@ class PedirNumeroYSumarTestCase(unittest.TestCase):
         self.assertEqual(numero, 6)
 
     def test_pasan_valor_no_numerico_primero(self):
-        user_input = ["hola", "5", "2"]
+        user_input = ["cinco", "5", "2"]
         with patch('builtins.input', side_effect = user_input):
             numero = sumar_numeros_recibidos()
         self.assertEqual(numero, 7)
 
     def test_pasan_valor_no_numerico_segundo(self):
-        user_input = ["5", "hola", "2"]
+        user_input = ["5", "dos", "2"]
         with patch('builtins.input', side_effect = user_input):
             numero = sumar_numeros_recibidos()
         self.assertEqual(numero, 7)

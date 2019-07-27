@@ -23,7 +23,7 @@ def form(seccion, tema, ej):
         form.editor.data = formato_funcion(tema, pruebas)
 
     lista_ejs = ordenar_lista_directorio(os.listdir("templates/ejercicios/{}/{}".format(seccion,tema)))
-    prox_ej = getProximoEjercicio(tema, ej)
+    prox_ej = getProximoEjercicio(seccion,tema, ej)
     print(prox_ej)
 
     if request.method == 'POST' and form.validate():
@@ -111,11 +111,11 @@ def formatear_salida(salida):
     salida = re.sub(r'(test_\w*)', '<span id="funcion">'+ r'\1' + '</span>', salida)
     return salida
 
-def getProximoEjercicio(tema, ej):
+def getProximoEjercicio(seccion, tema, ej):
     #Refactorizar, lo hago rápido
     list_ejs = []
     num_ej = 0
-    with open(f"info/{tema}.csv") as seccion:
+    with open(f"info/{seccion}/{tema}.csv") as seccion:
         for i,ejercicio in enumerate(seccion):
             list_ejs.append(ejercicio)
             if ejercicio.rstrip('\n') == ej:
