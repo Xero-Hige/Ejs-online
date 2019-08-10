@@ -1,0 +1,3 @@
+bash ./CleanContainers.sh
+pip3 install -r requirements.txt
+docker build . -t run-container
