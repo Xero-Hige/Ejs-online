@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="listado">
-    <h2>{{tema}}</h2>
+    <h2>{{tema | replace("_", " ")}}</h2>
     <ul>
         {% if ejercicios %}
             {% for ejercicio in ejercicios %}

@@ -49,7 +49,7 @@ input {
 }
 
 .code-editor input{
-    margin-top: 5%;
+    margin-top: 0.9em;
 }
 
 #submit {
@@ -72,24 +72,11 @@ input {
     color: #ffdd59;
 }
 
-/*----------*/
-
-/* .terminal textarea {
-    border: 1px solid #BBB;
-    width: 100%;
-    resize: none;
-} */
-
 .code-editor form{
     height: 100%;
 }
 
-/* #result {
-    color: white;
-    background-color: #1e272e;
-    font-weight: 550;
-} */
-
+/*----------------------ENUNCIADO---------------------*/
 
 .enunciados {
     border: 1px solid #fbc531;
@@ -114,6 +101,16 @@ input {
 
 .enunciado{
     background: #dcdde1;
+}
+
+.enunciado .content h2{
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: -12px;
+}
+
+.enunciado .content h3{
+    color: #7f8c8d;
 }
 
 .test-result{
@@ -236,40 +233,48 @@ input {
     align-content: center;
     align-items: center;
     text-align: center;
-    margin: 5% 5% auto 5%;
+    padding: 5em;
 }
-
 
 .not-found h2{
     font-size: 5vh;
 }
 
-span.zen { 
+span.zen , .not-found a{ 
     color: #e4cb58;
     font: inherit;
-  }
+}
+
+.not-found a{
+    text-decoration: none;
+}
 
 /*----------------------ABOUT---------------------*/
 
 .about {
     color: #fff;
-    justify-content: center;
     align-content: center;
-    align-items: center;
+    justify-content: center;
     text-align: center;
     min-height: 10vh;
     display: flex;
     flex-wrap: wrap;
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 .about h1{
-    font-size: 5vh;
+    font-size: 6vh;
+    color: #ff7f82;
 }
 
 .about p{
-    line-height: 2.5vh;
+    line-height: 4vh;
+    text-align: center;
+    padding: 0em 6em 4em 7em;
+}
+
+.about a{
+    color: #f1c40f;
+    text-decoration: none;
 }
 
 /*----------------------LISTADO---------------------*/
@@ -280,13 +285,13 @@ span.zen {
     flex-direction: column;
     align-content: center;
     justify-items: center;
+    align-items: center;
 }
 
 .listado ul{
     display: flex;
     flex-direction: column;
     list-style: none;
-    margin: 0 auto;
     width: 60%; 
     padding-bottom: 30px;
 }
@@ -294,19 +299,16 @@ span.zen {
 .listado ul li{
     background: #ff7f82;
     margin-top: 15px;
-    padding: 1em;
     margin-bottom: .125em;
-    display: block;
     list-style: none;
     text-transform: uppercase;
-
 }
 
 .listado ul li a {
     text-decoration: none;
     color: #fff;
     display: block;
-    padding: 4px 3px;
+    padding: 15px 0px 15px 15px;
     width: 100%;
 }
 
